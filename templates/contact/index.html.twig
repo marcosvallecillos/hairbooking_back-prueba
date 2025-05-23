@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block body %}
+<div class="contact-container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form class="contact-form" method="post">
+        <h2>Contáctanos</h2>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="input-group">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="input-group">
+                    {{ form_label(form.apellidos) }}
+                    {{ form_widget(form.apellidos, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.apellidos) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="input-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="input-group">
+                    {{ form_label(form.phone) }}
+                    {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.phone) }}
+                </div>
+            </div>
+        </div>
+        <div class="input-group">
+            {{ form_label(form.subject) }}
+            {{ form_widget(form.subject, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.subject) }}
+        </div>
+        <div class="input-group">
+            {{ form_label(form.message) }}
+            {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+            {{ form_errors(form.message) }}
+        </div>
+        <div class="input-group checkbox-group">
+            {{ form_widget(form.privacy) }}
+            {{ form_label(form.privacy) }}
+            {{ form_errors(form.privacy) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        {{ form_end(form) }}
+    </form>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+.contact-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.contact-form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.contact-form h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+button[type="submit"]:hover {
+    background: #0056b3;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+</style>
+{% endblock %}

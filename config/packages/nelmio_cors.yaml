@@ -1,0 +1,15 @@
+nelmio_cors:
+    defaults:
+        origin_regex: false
+        allow_credentials: false
+        allow_origin: ['https://hairbooking.vercel.app']
+        allow_headers: ['Content-Type', 'Authorization']
+        expose_headers: []
+        allow_methods: ['GET', 'POST','PUT','DELETE', 'PATH', 'OPTIONS']
+        max_age: 3600
+    paths:
+        '^/contact':
+            allow_origin: ['https://hairbooking.vercel.app']
+            allow_methods: ['POST', 'OPTIONS']
+            allow_headers: ['Content-Type']
+            max_age: 3600
