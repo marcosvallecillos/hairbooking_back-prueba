@@ -19,6 +19,7 @@ echo "Running migrations..."
 php bin/console doctrine:migrations:migrate --env=prod --no-interaction --allow-no-migration
 
 echo "Clearing cache..."
+chmod -R 777 var/cache var/log
 php bin/console cache:clear --env=prod
 
 echo "Starting server..."
