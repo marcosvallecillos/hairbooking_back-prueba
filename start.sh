@@ -1,20 +1,27 @@
 #!/bin/bash
 set -e
 
-echo "Valor de DATABASE_URL: $DATABASE_URL"
-echo "Usando puerto: $PORT"
+echo "Checking environment variables..."
+echo "DATABASE_URL: $DATABASE_URL"
+echo "Using port: $PORT"
 
-PORT=${PORT:-9000} # Si PORT no está definido, usa 8000
+PORT=${PORT:-9000} # Default to port 9000 if not set
 
-echo "Esperando base de datos..."
+echo "Waiting for database..."
 
-until php test-db.php | grep -q "ok"; do
-    echo "Base de datos no disponible, esperando 5 segundos..."
+# Test database connection using Symfony's doctrine:schema:validate
+until php bin/console doctrine:schema:validate --env=prod --no-interaction > /dev/null 2>&1; do
+    echo "Database not available, waiting 5 seconds..."
     sleep 5
 done
 
-echo "Ejecutando migraciones..."
-APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+echo "Database is available!"
 
-echo "Iniciando servidor..."
-APP_ENV=prod php -S 0.0.0.0:${PORT} -t public
+echo "Running migrations..."
+php bin/console doctrine:migrations:migrate --env=prod --no-interaction --allow-no-migration
+
+echo "Starting server..."
+php -S 0.0.0.0:${PORT} -t public &
+
+echo "Starting message consumer for async tasks..."
+php bin/console messenger:consume async --env=prod --time-limit=3600 --memory-limit=256M
