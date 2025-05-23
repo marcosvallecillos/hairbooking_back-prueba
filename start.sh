@@ -7,6 +7,7 @@ echo "Using port: $PORT"
 
 PORT=${PORT:-9000} # Default to port 9000 if not set
 
+
 echo "Waiting for database..."
 until php bin/console doctrine:schema:validate --env=prod --no-interaction > /dev/null 2>&1; do
     echo "Database not available, waiting 5 seconds..."
